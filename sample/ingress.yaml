@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/force-ssl-redirect: "false" 
+    cert-manager.io/cluster-issuer: letsencrypt
+    namespace: ratingsapp
+  name: dev
+spec:
+  tls:
+    - hosts:
+        - "*.cloudnetapps.com"
+      secretName: wildcard
+  rules:
+    - host: demo.cloudnetapps.com
+      http:
+        paths:
+          - backend:
+              serviceName: ratings-web
+              servicePort: 80
+    - host: "*.cloudnetapps.com"
+      http:
+        paths:
+          - backend:
+              serviceName: myapp-web
+              servicePort: 80
+    - host: cloudnetapps.com
+      http:
+        paths:
+          - backend:
+              serviceName: myapp-web
+              servicePort: 80

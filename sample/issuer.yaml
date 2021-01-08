@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt
+  namespace: ratingsapp
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: yourownen@emailaccount.com
+    privateKeySecretRef:
+      name: letsencrypt
+    # Use dns-01 challenges in order to support wildcard domain names
+    solvers:
+    - dns01:
+        azureDNS:
+          clientID: xxxxx-xxx-xxxx-xxxx-xxxxxxxx
+          clientSecretSecretRef:
+            key: password
+            name: secret-azuredns-config
+          subscriptionID: xxxx-xxxx-xxx-xxxx-xxxxx
+          tenantID: xxxxx-xxxx-xxxx-xxx-xxxxxx
+          resourceGroupName: web
+          hostedZoneName: cloudnetapps.com
+          environment: AzurePublicCloud

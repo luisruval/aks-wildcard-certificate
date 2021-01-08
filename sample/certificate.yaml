@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard
+  namespace: ratingsapp
+spec:
+  secretName: wildcard
+  issuerRef:
+    name: letsencrypt
+    kind: Issuer
+  commonName: '*.cloudnetapps.com'
+  dnsNames:
+  - "*.cloudnetapps.com"
+  - cloudnetapps.com
